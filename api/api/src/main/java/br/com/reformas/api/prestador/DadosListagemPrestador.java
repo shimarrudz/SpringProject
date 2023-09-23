@@ -1,6 +1,7 @@
 package br.com.reformas.api.prestador;
 
 public record DadosListagemPrestador(
+		Long id,
 		String nome,
 		String email,
 		String cnpj,
@@ -9,6 +10,7 @@ public record DadosListagemPrestador(
 	
 	public DadosListagemPrestador(Prestador prestador) {
 		this(
+				prestador.getId(),
 				prestador.getNome(),
 				prestador.getEmail(),
 				prestador.getCnpj(),

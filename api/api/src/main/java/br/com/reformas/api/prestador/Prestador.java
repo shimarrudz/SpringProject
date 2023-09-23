@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 @Entity(name = "Prestador")
 public class Prestador {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,6 +21,7 @@ public class Prestador {
 	private String email;
 	private String telefone;
 	private String cnpj;
+	private Boolean ativo;
 	
 	@Enumerated(EnumType.STRING)
 	private Especialidade especialidade;
@@ -33,6 +33,7 @@ public class Prestador {
 	}
 	
 	public Prestador(DadosCadastroPrestador dados) {
+		this.ativo = true;
 		this.nome = dados.nome();
 		this.email = dados.email();
 		this.telefone = dados.telefone();
@@ -95,6 +96,34 @@ public class Prestador {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	
+	public void atualizarInformacoes(DadosAtualizacaoPrestador dados) {
+		if (dados.nome() != null) {
+			this.nome = dados.nome();
+		}
+		if (dados.telefone() != null) {
+			this.telefone = dados.telefone();
+		}
+		if (dados.especialidade() != null) {
+			this.especialidade = dados.especialidade();
+		}
+		if (dados.endereco() != null) {
+			this.endereco.atualizarInformacoes(dados.endereco());
+		}
+	}
+	
+	public void excluir() {
+		this.ativo = false;
 	}
 		
 }
